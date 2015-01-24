@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+# The path to "static" folder
+STATIC_PATH = os.path.join(BASE_DIR,'static')
+
+
+# The path to "templates" folder
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -27,6 +33,13 @@ SECRET_KEY = '+0o8$)liyqg7hi2^1#n4)ia$j=edj8r)c@myjxla^g8y*^s1$v'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+
+# Creating the templates path.
+
+TEMPLATE_DIRS = [TEMPLATE_PATH,]
+
+
+
 
 ALLOWED_HOSTS = []
 
@@ -86,3 +99,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
