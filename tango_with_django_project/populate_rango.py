@@ -8,6 +8,7 @@ from rango.models import Category, Page
 
 
 def populate():
+
     python_cat = add_cat('Python', 128, 64)
 	
     add_page(cat=python_cat,
@@ -46,6 +47,16 @@ def populate():
         title="Flask",
         url="http://flask.pocoo.org")
 
+    author_cat = add_cat("2023503",0,0)
+    
+    add_page(cat=author_cat,
+        title="Link to GitHub",
+        url="https://github.com/2023503Gulen")
+    
+    add_page(cat=author_cat,
+        title="Link to pythonanywhere.com",
+        url="https://www.pythonanywhere.com/user/2023503Gulen/consoles/")
+        
     # Print out what we have added to the user.
     for c in Category.objects.all():
         for p in Page.objects.filter(category=c):

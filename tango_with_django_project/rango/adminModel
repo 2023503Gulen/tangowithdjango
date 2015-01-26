@@ -1,5 +1,0 @@
-from django.contrib import admin
-import admin.ModelAdmin
-
-class PageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'url')
