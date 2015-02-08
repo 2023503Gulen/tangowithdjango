@@ -5,6 +5,9 @@
     </head>
 
     <body>
+        {% if invalid %}
+        <p> {{ invalid }} </p>
+        {% endif %}
         <h1>Login to Rango</h1>
 
         <form id="login_form" method="post" action="/rango/login/">

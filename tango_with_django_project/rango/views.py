@@ -191,7 +191,8 @@ def user_login(request):
             # Bad login details were provided. So we can't log the user in.
             # Printing the password is excluded from the code for security reasons.
             print "Invalid login attempt by {0}".format(username)
-            return HttpResponse("Invalid login details supplied.")
+            invalid_login = "Invalid login details supplied. Please try again."
+            return render(request, 'rango/login.html', {"invalid":invalid_login})
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
