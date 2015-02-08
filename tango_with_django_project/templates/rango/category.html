@@ -17,10 +17,7 @@
             <strong>No pages currently in category.</strong>
             {% endif %}
         {% if user.is_authenticated %}
-            </br><a href='/rango/category/{{ slug }}/add_page/'>Create a Page</a>
-        {% else %}
-            <a href="/rango/login/">Login to add a page</a><br />
-            <a href="/rango/register/">Register Here</a><br />
+            </br><a href="{% url 'add_page' slug %}">Create a Page</a>
             {% endif %}
     {% else %}
         The specified category {{ category_name }} does not exist!

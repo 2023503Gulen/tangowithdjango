@@ -1,19 +1,15 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
 {% load staticfiles %}
 
-	<head>
-		<title>About</title>
-	</head>
-	
-	<body>
-		<h1>Rango says...</h1>
-		This is the about page! <strong>{{ boldmessage }}</strong><br />
-		<a href='/rango/'>Index</a>
-		</br> <img src="{% static "images/bitim.jpg" %}" alt="Picture of bitim" /> <!-- the alt is the alternative -->
-		</br> <img src="{% static "images/me.jpg" %}" alt="A picture of the author with Nisa's cat" /> 
-		<p> This tutorial has been put together by Gulen 2023503 </p>
-	</body>
-	
-</html>
+{% block title %}About{% endblock %}
+
+{% block body_block %}
+
+    <h1>Rango says...</h1>
+    This is the about page! <strong>{{ boldmessage }}</strong><br />
+    </br> <img src="{% static "images/bitim.jpg" %}" alt="Picture of bitim" /> <!-- the alt is the alternative -->
+    </br> <img src="{% static "images/me.jpg" %}" alt="A picture of the author with Nisa's cat" /> 
+    <p> This tutorial has been put together by Gulen 2023503 </p>
+
+{% endblock %}
