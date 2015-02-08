@@ -45,7 +45,7 @@ TEMPLATE_DEBUG = True
 
 TEMPLATE_DIRS = [TEMPLATE_PATH,]
 
-
+LOGIN_URL = '/rango/login/'
 
 
 ALLOWED_HOSTS = []
