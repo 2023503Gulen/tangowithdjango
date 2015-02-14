@@ -6,6 +6,7 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm
 
 def index(request):
+    request.session.set_test_cookie()
     # Query the database for a list of ALL categories currently stored.
     # Order the categories by no. likes in descending order.
     # Retrieve the top 5 only - or all if less than 5.
@@ -105,7 +106,9 @@ def add_page(request, category_name_slug):
     return render(request, 'rango/add_page.html', context_dict)
 
 def register(request):
-
+    if request.session.test_cookie_worked():
+        print ">>>> TEST COOKIE WORKED!"
+        request.session.delete_test_cookie()
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
     registered = False
@@ -214,16 +217,3 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/rango/')
-
-##Previous code for index view
-##def index(request):
-##    # Construct a dictionary to pass to the template engine as its context.
-##    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-##    context_dict = {'boldmessage': "I am bold font from the context"}
-##
-##    # Return a rendered response to send to the client.
-##    # We make use of the shortcut function to make our lives easier.
-##    # Note that the first parameter is the template we wish to use.
-##
-##    return render(request, 'rango/index.html', context_dict)
-
