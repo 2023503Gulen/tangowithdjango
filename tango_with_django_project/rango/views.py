@@ -6,7 +6,6 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm
 
 def index(request):
-    request.session.set_test_cookie()
     # Query the database for a list of ALL categories currently stored.
     # Order the categories by no. likes in descending order.
     # Retrieve the top 5 only - or all if less than 5.
@@ -106,9 +105,6 @@ def add_page(request, category_name_slug):
     return render(request, 'rango/add_page.html', context_dict)
 
 def register(request):
-    if request.session.test_cookie_worked():
-        print ">>>> TEST COOKIE WORKED!"
-        request.session.delete_test_cookie()
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
     registered = False
