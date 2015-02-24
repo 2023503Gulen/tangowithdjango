@@ -25,7 +25,7 @@ def index(request):
     reset_last_visit_time = False
     last_visit = request.session.get('last_visit')    
     # Does the cookie last_visit exist?
-    if last_visit
+    if last_visit:
         last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
 
         # If it's been more than a day since the last visit...
@@ -44,11 +44,17 @@ def index(request):
     context_dict['visits'] = visits
 
     response = render(request, 'rango/index.html', context_dict)
-
+    print "Number of visits: ", visits
     return response
 
 def about(request):
-    context_dict = { 'boldmessage': "I am bold too!"}
+    # If the visits session varible exists, take it and use it.
+    # If it doesn't, we haven't visited the site so set the count to zero.
+    if request.session.get('visits'):
+        count = request.session.get('visits')
+    else:
+        count = 0
+    context_dict = { 'boldmessage': "I am bold too!", 'visits': count}
     return render(request, 'rango/about.html', context_dict)
 
 def category(request, category_name_slug):
