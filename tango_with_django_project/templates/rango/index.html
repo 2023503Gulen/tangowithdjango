@@ -7,10 +7,11 @@
 {% block body_block %}
         {% if user.is_authenticated %}
             <h1>Rango says... hello {{ user.username }}!</h1>
+
         {% else %}
             <h1>Rango says... hello world!</h1>
+            
             {% endif %}
-
 		<h3>Top 5 Categories</h3>
         {% if categories %}
             <ul>
@@ -32,7 +33,6 @@
             {% else %}
                 <strong>No pages currently in category.</strong>
                 {% endif %}
-
 {% endblock %}
 <!-- 
 Previous code

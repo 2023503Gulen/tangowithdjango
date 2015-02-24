@@ -25,6 +25,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Absolute path to the media direct
 # The path to "templates" folder
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 
+# Allowing browser-length sessions
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# Clear the session cookies by executing python manage.py clearsessions
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
