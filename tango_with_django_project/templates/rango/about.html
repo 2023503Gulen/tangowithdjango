@@ -8,6 +8,7 @@
 
     <h1>Rango says...</h1>
     This is the about page! <strong>{{ boldmessage }}</strong><br>
+    <a href="{% url 'auth_password_change' %}">Change password</a></li>
     <br> <p> Total visits: {{ visits }} </p>
     <br> <img src="{% static "images/bitim.jpg" %}" alt="Picture of bitim" /> <!-- the alt is the alternative -->
     <br> <img src="{% static "images/me.jpg" %}" alt="A picture of the author with Nisa's cat" /> 

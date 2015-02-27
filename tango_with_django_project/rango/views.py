@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import password_change
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm
@@ -44,7 +45,6 @@ def index(request):
     context_dict['visits'] = visits
 
     response = render(request, 'rango/index.html', context_dict)
-    print "Number of visits: ", visits
     return response
 
 def about(request):
@@ -240,6 +240,9 @@ def add_page(request, category_name_slug):
 def restricted(request):
     return render(request, 'rango/restricted.html')
     # return HttpResponse("Since you're loggin in, you can see this text!")
+    
+def change_password(request):
+    return password_change(request, post_change_redirect='/rango/about.html')
 
 ### Use the login_required() decorator to ensure only those logged in can access the view.
 ##@login_required
@@ -249,3 +252,5 @@ def restricted(request):
 ##
 ##    # Take the user back to the homepage.
 ##    return HttpResponseRedirect('/rango/')
+
+
