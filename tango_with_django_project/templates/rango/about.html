@@ -5,13 +5,19 @@
 {% block title %}About{% endblock %}
 
 {% block body_block %}
-
-    <h1>Rango says...</h1>
-    This is the about page! <strong>{{ boldmessage }}</strong><br>
-    <a href="{% url 'auth_password_change' %}">Change password</a></li>
-    <br> <p> Total visits: {{ visits }} </p>
-    <br> <img src="{% static "images/bitim.jpg" %}" alt="Picture of bitim" /> <!-- the alt is the alternative -->
-    <br> <img src="{% static "images/me.jpg" %}" alt="A picture of the author with Nisa's cat" /> 
+    
+    <div class="page-header">
+                <h1>About</h1>
+            </div>
+            <div>
+            <p></strong>Total visits: {{ visits }} </p>
+            
+            <img  width="100" height="100" src="{% static "images/bitim.jpg" %}" alt="Picture of bitim" />
+            </div>    
+    <br> <img width="100" height="100" src="{% static "images/me.jpg" %}" alt="A picture of the author with Nisa's cat" /> 
+    <p> <br>
+    <a href="{% url 'auth_password_change' %}">Change password</a>
+    </p>
     <p> This tutorial has been put together by Gulen 2023503 </p>
 
 {% endblock %}
