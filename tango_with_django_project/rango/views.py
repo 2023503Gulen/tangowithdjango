@@ -5,6 +5,7 @@ from django.contrib.auth.views import password_change
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm
+from rango.bing_search import run_query
 from datetime import datetime
 
 def index(request):
@@ -139,7 +140,29 @@ def add_page(request, category_name_slug):
     context_dict = {'form':form, 'category': cat}
 
     return render(request, 'rango/add_page.html', context_dict)
-                   
+
+@login_required
+def restricted(request):
+    return render(request, 'rango/restricted.html')
+    # return HttpResponse("Since you're loggin in, you can see this text!")
+    
+def change_password(request):
+    return password_change(request, post_change_redirect='/rango/about.html')
+
+def search(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+    return render(request, 'rango/search.html', {'result_list': result_list})
+
+
 ##def register(request):
 ##    # A boolean value for telling the template whether the registration was successful.
 ##    # Set to False initially. Code changes value to True when registration succeeds.
@@ -235,15 +258,7 @@ def add_page(request, category_name_slug):
 ##        # No context variables to pass to the template system, hence the
 ##        # blank dictionary object...
 ##        return render(request, 'rango/login.html', {})
-
-@login_required
-def restricted(request):
-    return render(request, 'rango/restricted.html')
-    # return HttpResponse("Since you're loggin in, you can see this text!")
-    
-def change_password(request):
-    return password_change(request, post_change_redirect='/rango/about.html')
-
+##
 ### Use the login_required() decorator to ensure only those logged in can access the view.
 ##@login_required
 ##def user_logout(request):
