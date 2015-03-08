@@ -72,10 +72,10 @@ def main():
         user_query = raw_input("Search for: ")
 
     results = run_query(user_query)
-    for rank in range(0,10):
-        print '-'*30
-        print 'rank: ', rank+1, '\ntitle: ', results[rank]['title'].encode('utf-8'), '\nurl: ', results[rank]['link']
-
+    if results:
+        for rank in range(0,10):
+            print '-'*30
+            print 'rank: ', rank+1, '\ntitle: ', results[rank]['title'].encode('utf-8'), '\nurl: ', results[rank]['link']
 if __name__ == '__main__':
     main()
 
