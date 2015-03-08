@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import password_change
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, UserProfile, User
-from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm
+from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm, EditProfileForm
 from rango.bing_search import run_query
 from datetime import datetime
 
@@ -206,9 +206,30 @@ def register_profile(request):
         
     return render(request,'rango/profile_registration.html',{'form':form})
 
+ 
 @login_required
 def profile(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     context_dict = {'user':user,'profile':profile}
     return render(request, 'rango/profile.html',context_dict)
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            print request.user
+            profile = form.save(commit=False)
+            profile.user = request.user
+            print request.POST
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+            profile.save()
+            return redirect("/rango/profile")
+        
+        else:
+            print form.errors
+    else:
+        form = UserProfileForm()
+
+    return render(request,'rango/edit_profile.html',{'form':form})
