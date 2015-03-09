@@ -23,13 +23,13 @@
         {% if user_profile %}
         <p><strong>Website: </strong><a href=" {{ profile.website }} ">{{ user_profile.website }}</a></p>
         <p><a href="{% url 'auth_password_change' %}">Change password</a></p>
-
+        <div class="span2">
+            <div class="btn-group">
+                <a class="btn btn-default" href="{% url 'edit_profile' %}" >Edit Profile</a>       
+        </div>
         {% endif %}
     </div>    
-    <div class="span2">
-        <div class="btn-group">
-            <a class="btn btn-default" href="{% url 'edit_profile' %}" >Edit Profile</a>       
-    </div>
+
 
 </div>
 </div>
