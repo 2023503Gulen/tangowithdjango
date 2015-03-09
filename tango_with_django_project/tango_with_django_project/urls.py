@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 from registration.backends.simple.views import RegistrationView
 
 
@@ -10,7 +11,7 @@ class MyRegistrationView(RegistrationView):
         return '/rango/add_profile'
 
 urlpatterns = patterns('',
-                       
+    url(r'^$',  RedirectView.as_view(url='/rango/')),                   
     url(r'^admin/', include(admin.site.urls)),
     url(r'^rango/', include('rango.urls')), # Connecting the main project to rango app.                   
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
