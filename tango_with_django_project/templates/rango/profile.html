@@ -13,25 +13,29 @@
 	<div class="row-fluid">
     {% if profile.picture %}
     <div class="span8 profile" >
-        <img width="75" height="75" src="{{ profile.picture.url }}" class="img-rounded" />
+        <img width="85" height="85" src="{{ profile.picture.url }}" class="img-rounded" />
     </div>
     {% endif %}
     
     <div class="span2">
         <h3> {{ user.username }} </h3>
-        <p><strong>Email: </strong> {{ user.email }}</h6>
+        <p><strong>Email: </strong> {{ user.email }}</p>
         {% if profile %}
-        <p><strong>Website: </strong><a href=" {{ profile.website }} ">{{ profile.website }}</a>
+        <p><strong>Website: </strong><a href=" {{ profile.website }} ">{{ profile.website }}</a></p>
+        <p><a href="{% url 'auth_password_change' %}">Change password</a></p>
+
         {% endif %}
     </div>
-
+    <p><a href=" {% url 'users_page' %} ">Lookup other users</a></p>
+    
     <div class="span2">
         <div class="btn-group">
             <a class="btn btn-default" href="{% url 'edit_profile' %}" >Edit Profile</a>       
     </div>
-</div>
-</div>
 
+</div>
+</div>
+</div>
 
 
 {% endblock %}

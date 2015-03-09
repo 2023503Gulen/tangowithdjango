@@ -102,6 +102,12 @@ def category(request, category_name_slug):
     return render(request, 'rango/category.html', context_dict)
 
 @login_required
+def users_page(request):
+    if request.method == 'GET':
+        all_users = User.objects.all()
+        return render(request,'rango/users_page.html',{'all_users':all_users})
+    
+@login_required
 def add_category(request):
     # A HTTP POST?
     if request.method == 'POST':
@@ -208,20 +214,21 @@ def register_profile(request):
 
  
 @login_required
-def profile(request):
-    user = request.user
+def profile(request, username):
+    user = User.objects.get(username=username)
     profile = UserProfile.objects.get(user=user)
     context_dict = {'user':user,'profile':profile}
     return render(request, 'rango/profile.html',context_dict)
 
+@login_required
 def edit_profile(request):
+    user_profile = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=request.user)
+        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             print request.user
             profile = form.save(commit=False)
             profile.user = request.user
-            print request.POST
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
             profile.save()
@@ -230,6 +237,5 @@ def edit_profile(request):
         else:
             print form.errors
     else:
-        form = UserProfileForm()
-
-    return render(request,'rango/edit_profile.html',{'form':form})
+        form = EditProfileForm()
+    return render(request,'rango/edit_profile.html',{'form':form,'user_profile':user_profile})

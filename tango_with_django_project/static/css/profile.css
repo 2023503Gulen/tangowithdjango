@@ -2,3 +2,10 @@
     float:left;
     padding-right:20px;
 }
+.uploadfile-name {
+    padding-top:20px;
+}
+.btn-align {
+    position:relative;
+    left:150px;
+}
