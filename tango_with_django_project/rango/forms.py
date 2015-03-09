@@ -58,28 +58,5 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')
-        
-class EditProfileForm(forms.ModelForm):
-    website = forms.URLField(help_text="Please enter your website.", required=False)
-    picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
-    
-    class Meta:
-        model = UserProfile
-        fields = ('website', 'picture')
-    def clean_website(self):
-        username = self.cleaned_data.get('username')
-        website = self.cleaned_data.get('website')
 
-##        if website and UserProfile.objects.filter(website=website).exclude(user.username=username).count():
-##            raise forms.ValidationError('This email address is already in use. Please supply a different email address.')
-##        return email
-
-    def save(self, commit=True):
-        profile = super(EditProfileForm, self).save(commit=False)
-        profile.website = self.cleaned_data['website']
-
-        if commit:
-            profile.save()
-
-        return profile
 

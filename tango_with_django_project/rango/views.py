@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import password_change
 from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page, UserProfile, User
-from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm, EditProfileForm
+from rango.forms import CategoryForm, PageForm,UserForm, UserProfileForm
 from rango.bing_search import run_query
 from datetime import datetime
 
@@ -193,6 +193,7 @@ def track_url(request):
         # otherwise redirect to homepage
     return redirect('/rango/')
 
+@login_required
 def register_profile(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST)
@@ -216,26 +217,38 @@ def register_profile(request):
 @login_required
 def profile(request, username):
     user = User.objects.get(username=username)
-    profile = UserProfile.objects.get(user=user)
-    context_dict = {'user':user,'profile':profile}
+    # boolean for checking if the requested profile is the logged in users.
+    user_profile = (request.user==user)
+    try:
+        profile =  UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        profile = None
+    context_dict = {'user':user,'profile':profile,'user_profile':user_profile}
     return render(request, 'rango/profile.html',context_dict)
 
 @login_required
 def edit_profile(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    # create a profile if it does not exist.
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        return register_profile(request)
+    # save the details
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            print request.user
-            profile = form.save(commit=False)
-            profile.user = request.user
+            user = form.save(commit=False)
+            # re-assign the values if they exist.
+            user_profile.website = request.POST['website']
             if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-            profile.save()
-            return redirect("/rango/profile")
+                user_profile.picture = request.FILES['picture']
+            user_profile.save()
+            user.save()
+            url = "/rango/profile/"+request.user.username+"/"
+            return redirect(url)
         
         else:
             print form.errors
     else:
-        form = EditProfileForm()
+        form = UserProfileForm(instance=request.user)
     return render(request,'rango/edit_profile.html',{'form':form,'user_profile':user_profile})
